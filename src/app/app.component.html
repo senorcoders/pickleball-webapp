@@ -1,20 +1,58 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container">
+  <div class="row">
+    <div class="col"><h1>Search Places</h1></div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="clickMap($event)" [disableDefaultUI]="false" [zoomControl]="false">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+  </div>
+<div class="form-group" style="margin-top: 20px;">
+    <input 
+    type="text"
+    class="google-place-input form-control"
+    google-place
+    lat="{{lat}}"
+    lng="{{lng}}"
+    (onSelect)="setAddress($event)"
+    placeholder="Type to search..">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+    <!-- Displaying the contents of the address object received from our event emitter -->
+    <ul style="list-style-type: none;">
+      <li *ngFor="let key of addrKeys">
+        <span style="font-weight: bold">{{key}}</span>: <span>{{addr[key]}}</span>
+      </li>
+    </ul>
+  <!-- <div class="row">
+    <input google-place type="text" class="google-place-input" placeholder="Type to search..">
+  </div> -->
+    <!-- <form [formGroup]="searchForm" (submit)="findPlace()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <select class="form-control" formControlName="type">
+              <option value="phonenumber">Phone Number</option>
+              <option value="textquery">Text</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" formControlName="text">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Send" [disabled]="searchForm.invalid">
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-12">
+        <h2></h2>
+      </div>
+    </div> -->
+</div>
