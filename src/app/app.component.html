@@ -31,20 +31,17 @@
         <input type="range" min="0" max="50000" step="500" class="form-control-range" (change)="setRadius($event.target.value)" value="0">
       </div>
     </div>
-    <!-- <div class="col-6">
+    <div class="col-12">
       <div class="form-group" >
-        <label>Search Query</label>
+        <label>Search Location</label>
         <input 
         type="text"
         class="google-place-input form-control"
         google-place
-        lat="{{lat}}"
-        lng="{{lng}}"
-        types="{{type}}"
         (onSelect)="setAddress($event)"
         placeholder="Type to search..">
       </div>
-    </div> -->
+    </div>
   </div>
     <!-- Displaying the contents of the address object received from our event emitter -->
     <!-- <ul style="list-style-type: none;">

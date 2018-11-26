@@ -9,7 +9,7 @@ export class GooglePlacesDirective implements OnInit {
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
   @Input() lat: number;
   @Input() lng: number;
-  @Input() types: string;
+  //@Input() types: string;
   @HostListener('click') click(e) {
     this.run()
   }
@@ -57,27 +57,16 @@ export class GooglePlacesDirective implements OnInit {
   }
   run(){
     var autocomplete;
-    var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(this.lat, this.lng)
-      //new google.maps.LatLng(51.5073509, -0.12775829999998223)
-    );
-    var options;
-    if(this.types!='all'){
-      options = {
-        bounds: defaultBounds,
-        types:[this.types]
-      };
-    }
-    else{
-      options= {
-        bounds: defaultBounds
-      };
-    }
-    console.log(options)
+    // var defaultBounds = new google.maps.LatLngBounds(
+    //   new google.maps.LatLng(this.lat, this.lng)
+    //   //new google.maps.LatLng(51.5073509, -0.12775829999998223)
+    // );
+    var options = {
+      types:['geocode']
+    };
     autocomplete = new google.maps.places.Autocomplete(this.element,options);
     //Event listener to monitor place changes in the input
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
-      console.log(autocomplete)
     //Emit the new address object for the updated place
     this.onSelect.emit(this.getFormattedAddress(autocomplete.getPlace()));
     });

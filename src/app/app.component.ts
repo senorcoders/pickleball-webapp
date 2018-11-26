@@ -27,14 +27,10 @@ export class AppComponent {
   //Method to be invoked everytime we receive a new instance 
   //of the address object from the onSelect event emitter.
   setAddress(addrObj) {
-    //We are wrapping this in a zone method to reflect the changes
-    //to the object in the DOM.
-  //   this.zone.run(() => {
-  //   	this.lat=addrObj.geometry.lat
-  //   	this.lng=addrObj.geometry.lng
-		// this.addr = addrObj;
-		// this.addrKeys = Object.keys(addrObj);
-  //   });
+    this.zone.run(() =>{
+    	this.lat=addrObj.geometry.lat;
+    	this.lng=addrObj.geometry.lng;
+    });
   }
   clickMap(event){
   	this.lat=event.coords.lat
