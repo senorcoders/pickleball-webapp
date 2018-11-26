@@ -4,55 +4,54 @@
   </div>
   <div class="row">
     <div class="col">
-      <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="clickMap($event)" [disableDefaultUI]="false" [zoomControl]="false">
+      <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="clickMap($event)" [disableDefaultUI]="true" [zoomControl]="true" [zoom]="14" >
         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"></agm-marker>
       </agm-map>
     </div>
   </div>
-<div class="form-group" style="margin-top: 20px;">
-    <input 
-    type="text"
-    class="google-place-input form-control"
-    google-place
-    lat="{{lat}}"
-    lng="{{lng}}"
-    (onSelect)="setAddress($event)"
-    placeholder="Type to search..">
-</div>
-    <!-- Displaying the contents of the address object received from our event emitter -->
-    <ul style="list-style-type: none;">
-      <li *ngFor="let key of addrKeys">
-        <span style="font-weight: bold">{{key}}</span>: <span>{{addr[key]}}</span>
-      </li>
-    </ul>
-  <!-- <div class="row">
-    <input google-place type="text" class="google-place-input" placeholder="Type to search..">
-  </div> -->
-    <!-- <form [formGroup]="searchForm" (submit)="findPlace()">
-      <div class="row">
-        <div class="col-6">
-          <div class="form-group">
-            <select class="form-control" formControlName="type">
-              <option value="phonenumber">Phone Number</option>
-              <option value="textquery">Text</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search" formControlName="text">
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Send" [disabled]="searchForm.invalid">
-          </div>
-        </div>
+  <div class="row" style="margin-top: 20px;">
+    <div class="col">
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="search()">RV Park</button>
+        <div id="map" style="display: none;"></div>
+        <!-- <label>Search Category</label>
+        <select class="form-control" (change)="changeType($event.target.value)">
+          <option value="all">All</option>
+          <option value="rv_park">Pickleball</option>
+          <option value="establishment">RV Resort</option>
+          <option value="restaurant">Restaurant</option>
+        </select> -->
       </div>
-    </form>
-    <div class="row">
-      <div class="col-12">
-        <h2></h2>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="formControlRange">Search Distance (Mts)</label>
+        <label class="radius">{{radius}}Meters ({{radius/1000}} Km)</label>
+        <input type="range" min="0" max="50000" step="500" class="form-control-range" (change)="setRadius($event.target.value)" value="0">
+      </div>
+    </div>
+    <!-- <div class="col-6">
+      <div class="form-group" >
+        <label>Search Query</label>
+        <input 
+        type="text"
+        class="google-place-input form-control"
+        google-place
+        lat="{{lat}}"
+        lng="{{lng}}"
+        types="{{type}}"
+        (onSelect)="setAddress($event)"
+        placeholder="Type to search..">
       </div>
     </div> -->
+  </div>
+    <!-- Displaying the contents of the address object received from our event emitter -->
+    <!-- <ul style="list-style-type: none;">
+      <li *ngFor="let key of addrKeys">
+        <ng-container *ngIf="key!='geometry'">
+          <span style="font-weight: bold">{{key}}</span>: <span>{{addr[key]}}</span>
+        </ng-container>
+      </li>
+    </ul> -->
 </div>
