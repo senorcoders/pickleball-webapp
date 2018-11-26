@@ -55,7 +55,7 @@ export class AppComponent {
     	options={
     		location:defaultBounds,
 	    	radius:this.radius,
-	    	query:query
+	    	name:query
     	}
     }
     else{
@@ -66,31 +66,9 @@ export class AppComponent {
 	   	};
     }
     let service = new google.maps.places.PlacesService(document.getElementById('map'));
-    if(this.condition){
-    	console.log(options)
-    	service.textSearch(options,(results,status, pagination)=>{
-			pagination.nextPage()
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-			    for (let result of results) {
-			    	this.zone.run(() => {
-			    		this.markers.push({
-			      	lat:result.geometry.location.lat(),
-			      	lng:result.geometry.location.lng()
-			      })
-			    	})
-			    }
-				
-			  }
-			else if(status=="ZERO_RESULTS"){
-				window.alert('No '+this.query+' found')
-			}
-			else{
-				window.alert('Something wrong happened try again')
-			}
-		});
-    }
-    else{
+    
 		service.nearbySearch(options,(results,status, pagination)=>{
+			console.log(results)
 			pagination.nextPage();
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 			    for (let result of results) {
@@ -104,13 +82,17 @@ export class AppComponent {
 				
 			  }
 			else if(status=="ZERO_RESULTS"){
-				window.alert('No RV Park found')
+				if(condition){
+					window.alert('No '+this.query+' found')
+				}else{
+					window.alert('No RV Park found')
+				}
 			}
 			else{
 				window.alert('Something wrong happened try again')
 			}
 		});
-	}
+	
   }
   setRadius(e){
   	this.radius=e
