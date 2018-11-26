@@ -45,11 +45,11 @@
     </div>
   </div>
     <!-- Displaying the contents of the address object received from our event emitter -->
-    <!-- <ul style="list-style-type: none;">
+    <ul style="list-style-type: none;">
       <li *ngFor="let key of addrKeys">
         <ng-container *ngIf="key!='geometry'">
-          <span style="font-weight: bold">{{key}}</span>: <span>{{addr[key]}}</span>
+          <span style="font-weight: bold" *ngIf="addr[key]">{{key}} : </span><span>{{addr[key]}}</span>
         </ng-container>
       </li>
-    </ul> -->
+    </ul>
 </div>

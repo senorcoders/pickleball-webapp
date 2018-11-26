@@ -30,6 +30,8 @@ export class AppComponent {
   //of the address object from the onSelect event emitter.
   setAddress(addrObj) {
     this.zone.run(() =>{
+    	this.addr=addrObj
+    	this.addrKeys=Object.keys(addrObj)
     	this.lat=addrObj.geometry.lat;
     	this.lng=addrObj.geometry.lng;
     });
