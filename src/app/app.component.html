@@ -1,6 +1,17 @@
 <div class="container">
   <div class="row">
     <div class="col"><h1>Search Places</h1></div>
+    <div class="col-12">
+      <div class="form-group" >
+        <label>Search Location</label>
+        <input 
+        type="text"
+        class="google-place-input form-control"
+        google-place
+        (onSelect)="setAddress($event)"
+        placeholder="Type to search..">
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col">
@@ -13,7 +24,8 @@
   <div class="row" style="margin-top: 20px;">
     <div class="col">
       <div class="form-group">
-        <button class="btn btn-primary" (click)="search()">RV Park</button>
+        <button class="btn btn-primary" (click)="search(false,'')">RV Park</button>
+        <button class="btn btn-success" (click)="search(true,'pickleball courts')">pickleball courts</button>
         <div id="map" style="display: none;"></div>
         <!-- <label>Search Category</label>
         <select class="form-control" (change)="changeType($event.target.value)">
@@ -29,17 +41,6 @@
         <label for="formControlRange">Search Distance (Mts)</label>
         <label class="radius">{{radius}}Meters ({{radius/1000}} Km)</label>
         <input type="range" min="0" max="50000" step="500" class="form-control-range" (change)="setRadius($event.target.value)" value="0">
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="form-group" >
-        <label>Search Location</label>
-        <input 
-        type="text"
-        class="google-place-input form-control"
-        google-place
-        (onSelect)="setAddress($event)"
-        placeholder="Type to search..">
       </div>
     </div>
   </div>

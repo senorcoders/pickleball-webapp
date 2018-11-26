@@ -15,6 +15,8 @@ export class AppComponent {
   	type:any='all';
   	markers:any=[];
   	radius:number=100;
+  	query:string;
+  	condition:boolean;
   	constructor(private zone: NgZone) {
   	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(position => {
@@ -43,40 +45,75 @@ export class AppComponent {
   changeType(e){
   	this.type=e
   }
-  search(){
-    var defaultBounds = new google.maps.LatLng(this.lat, this.lng
-      //new google.maps.LatLng(this.lat, this.lng)
-      //new google.maps.LatLng(51.5073509, -0.12775829999998223)
-    );
-    var options={
-    	location:defaultBounds,
-    	radius:this.radius,
-    	type:['rv_park']
-   	};
+  search(condition,query){
+  	this.condition=condition;
+  	this.query=query
+    var defaultBounds = new google.maps.LatLng(this.lat, this.lng);
+    var options
+
+    if(condition){
+    	options={
+    		location:defaultBounds,
+	    	radius:this.radius,
+	    	query:query
+    	}
+    }
+    else{
+    	options={
+	    	location:defaultBounds,
+	    	radius:this.radius,
+	    	type:['rv_park']
+	   	};
+    }
     let service = new google.maps.places.PlacesService(document.getElementById('map'));
-	service.nearbySearch(options,(results,status, pagination)=>{
-		pagination.nextPage();
-	  if (status == google.maps.places.PlacesServiceStatus.OK) {
-	    for (let result of results) {
-	    	this.zone.run(() => {
-	    		this.markers.push({
-	      	lat:result.geometry.location.lat(),
-	      	lng:result.geometry.location.lng()
-	      })
-	    	})
-	    }
-		
-	  }
-	else if(status=="ZERO_RESULTS"){
-		window.alert('No RV Park found')
+    if(this.condition){
+    	console.log(options)
+    	service.textSearch(options,(results,status, pagination)=>{
+			pagination.nextPage()
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+			    for (let result of results) {
+			    	this.zone.run(() => {
+			    		this.markers.push({
+			      	lat:result.geometry.location.lat(),
+			      	lng:result.geometry.location.lng()
+			      })
+			    	})
+			    }
+				
+			  }
+			else if(status=="ZERO_RESULTS"){
+				window.alert('No '+this.query+' found')
+			}
+			else{
+				window.alert('Something wrong happened try again')
+			}
+		});
+    }
+    else{
+		service.nearbySearch(options,(results,status, pagination)=>{
+			pagination.nextPage();
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+			    for (let result of results) {
+			    	this.zone.run(() => {
+			    		this.markers.push({
+			      	lat:result.geometry.location.lat(),
+			      	lng:result.geometry.location.lng()
+			      })
+			    	})
+			    }
+				
+			  }
+			else if(status=="ZERO_RESULTS"){
+				window.alert('No RV Park found')
+			}
+			else{
+				window.alert('Something wrong happened try again')
+			}
+		});
 	}
-	else{
-		window.alert('Something wrong happened try again')
-	}
-    });
   }
   setRadius(e){
   	this.radius=e
-  	this.search();
+  	//this.search(this.condition,this.query);
   }
 }
