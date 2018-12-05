@@ -6,14 +6,24 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GooglePlacesDirective } from './directives/google-places.directive';
 import { AgmCoreModule } from '@agm/core';
+import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
+import {Routes,RouterModule} from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
+const appRoutes: Routes=[
+  {path:'', component:HomeComponent},
+  {path:'recovery/:code', component:RecoveryPasswordComponent},
+];
 @NgModule({
   declarations: [
     AppComponent,
-    GooglePlacesDirective
+    GooglePlacesDirective,
+    RecoveryPasswordComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(appRoutes),
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
