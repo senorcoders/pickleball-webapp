@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create User</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <i class="fa fa-close" aria-hidden="true"></i>
+  </button>
+</div>
+<form [formGroup]="formUser" (ngSubmit)="createUser()">
+  <div class="modal-boy">
+    <div class="container">
+      <div class="form-group">
+        <label for="username">Full Name</label>
+        <input type="text" class="form-control" formControlName="fullName" />
+        <bfv-messages>Name Is Required</bfv-messages>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" formControlName="email" />
+        <bfv-messages>Email Is Required</bfv-messages>
+      </div>
+      <div class="form-group">
+        <label for="username">Password</label>
+        <input type="password" class="form-control" formControlName="password" />
+        <bfv-messages>Password Is Required</bfv-messages>
+      </div>
+      <div class="form-group">
+        <label for="username">Confirm Password</label>
+        <input type="password" class="form-control" formControlName="passwordRepeat" />
+        <bfv-messages>Confirm Password Is Required</bfv-messages>
+      </div>
+      <div class="form-group row">
+        <label for="example-date-input" class="col-2 col-form-label">Birthday</label>
+        <div class="col-10">
+          <input class="form-control" type="date" formControlName="birthDay" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleSelect2">Gender</label>
+        <select class="form-control" formControlName="genere">
+          <option value="male">Male</option>
+          <option value="femele">Femele</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" [disabled]="!formUser.valid">
+        Create
+      </button>
+    </div>
+  </div>
+</form>

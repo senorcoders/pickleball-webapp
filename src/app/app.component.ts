@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'pickleconnect-webapp';
+
+  constructor(private auth: AuthService, private router: Router) {
+    if (this.auth.isLogged() === true) {
+      this.router.navigate(["users"]);
+    } else {
+      this.router.navigate(["login"]);
+    }
+  }
+
 }
