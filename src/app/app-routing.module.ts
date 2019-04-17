@@ -4,11 +4,13 @@ import { LoginComponent } from './login/login.component';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { AuthGuardService } from './auth-guard.service';
 import { UsersComponent } from './users/users.component';
+import { EventsComponent } from './events/events.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent, pathMatch: 'full' },
   { path: "dashboard", component: DashBoardComponent, canActivate: [AuthGuardService] },
   { path: "users", component: UsersComponent, canActivate: [AuthGuardService] },
+  { path: "events", component: EventsComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: '/users', pathMatch: 'full' }
 ];
 

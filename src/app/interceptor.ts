@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-    public static url = 'https://pickleweb.senorcoders.com'; // "http://localhost:8781";
+    public static url = "http://localhost:8781"; // 'https://pickleweb.senorcoders.com';
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (AuthService.getToken() !== "") {

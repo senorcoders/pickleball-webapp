@@ -14,6 +14,9 @@ import { AuthService } from './auth.service';
 import { UsersComponent } from './users/users.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { EventsComponent } from './events/events.component';
+import { CreateEventComponent } from './create-event/create-event.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { CreateUserComponent } from './create-user/create-user.component';
     LoginComponent,
     DashBoardComponent,
     UsersComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent,
+    EventsComponent,
+    CreateEventComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,9 @@ import { CreateUserComponent } from './create-user/create-user.component';
     AuthService
   ],
   entryComponents: [
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent,
+    CreateEventComponent
   ],
   bootstrap: [AppComponent]
 })

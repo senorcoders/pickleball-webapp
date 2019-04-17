@@ -40,4 +40,11 @@ export class AuthService {
       return JSON.parse(user)["token"];
     return "";
   }
+
+  public static getUser(){
+    let user = localStorage.getItem("user") as any;
+    if (user !== null && user !== undefined)
+      return JSON.parse(user);
+    return {};
+  }
 }

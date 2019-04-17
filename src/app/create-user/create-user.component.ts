@@ -11,19 +11,31 @@ import * as moment from 'moment';
 })
 export class CreateUserComponent implements OnInit {
 
+  public user: any = null;
+
   public formUser = new FormGroup({
     fullName: new FormControl("", Validators.required),
     email: new FormControl("", [Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)]),
     password: new FormControl("", Validators.required),
     passwordRepeat: new FormControl("", Validators.required),
     birthDay: new FormControl("", Validators.required),
-    genere: new FormControl('', Validators.required)
+    gender: new FormControl('', Validators.required)
   });
   public realtor = false;
 
   constructor(public modalService: NgbActiveModal, private http: HttpClient) { }
 
   ngOnInit() {
+    if (this.user !== null) {
+      let user = {
+        fullName: this.user.fullName,
+        email: this.user.email,
+        password: this.user.password,
+        birthDay: moment(this.user.birthDay).format("YYYY/MM/DD"),
+        gender: this.user.gender
+      };
+      this.formUser.patchValue(user);
+    }
   }
 
   public close() {
@@ -42,10 +54,13 @@ export class CreateUserComponent implements OnInit {
         email: values.email,
         password: values.password,
         birthDay: moment(values.birthDay, "YYYY/MM/DD").toISOString(),
-        gender: values.genere
+        gender: values.gender
       };
       console.log(user);
-      let res = await this.http.post("/signup", user).toPromise();
+      if (this.user === null)
+        await this.http.post("/signup", user).toPromise();
+      else
+        await this.http.patch("/user/"+ this.user.id, user).toPromise();
       this.close();
     } catch (error) {
       console.error(error);

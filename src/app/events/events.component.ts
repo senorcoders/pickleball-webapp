@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateEventComponent } from '../create-event/create-event.component';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CreateUserComponent } from '../create-user/create-user.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-events',
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class EventsComponent implements OnInit {
 
   public selectView = "list";
-  public users = [];
+  public events = [];
   public count = 0;
   public countList = 0;
   public countArr = [];
@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit {
   public async getUsersExec(skip) {
     skip *= 20;
     this.skip = skip;
-    let count = await this.http.get(`/user-count`).toPromise() as any;
+    let count = await this.http.get(`/event-count`).toPromise() as any;
     this.count = count.count;
     // this.count = 20;
     this.countList = this.count / 20;
@@ -48,11 +48,7 @@ export class UsersComponent implements OnInit {
     for (let i = 0; i < this.countList; i++) {
       this.countArr.push(i);
     }
-    this.users = await this.http.get(`/user?sort=createdAt DESC&limit=20&skip=${skip}`).toPromise() as any;
-    this.users = this.users.map(it => {
-      it.createdAt = new Date(it.createdAt);
-      return it;
-    });
+    this.events = await this.http.get(`/event?sort=createdAt DESC&limit=20&skip=${skip}`).toPromise() as any;
   }
 
   public isSelectCount(skip) {
@@ -78,20 +74,20 @@ export class UsersComponent implements OnInit {
     return false;
   }
 
-  public toEvents(e){
+  public toUsers(e){
     e.preventDefault();
-    this.router.navigate(["events"]);
+    this.router.navigate(["users"]);
     return false;
   }
 
-  public createUser(e) {
+  public createEvent(e) {
     e.preventDefault();
-    this.createUserExec();
+    this.createEventExec();
     return false;
   }
 
-  private createUserExec() {
-    const modalRef = this.modalCtrl.open(CreateUserComponent);
+  private createEventExec() {
+    const modalRef = this.modalCtrl.open(CreateEventComponent);
     
     modalRef.result.then((result) => {
       console.log(result);
@@ -104,25 +100,21 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  public editUser(e, user) {
-    e.preventDefault();
-    this.editUserExec(user);
-    return false;
-  }
+  // public editUser(e, user) {
+  //   e.preventDefault();
+  //   this.editUserExec(user);
+  //   return false;
+  // }
 
-  private editUserExec(user) {
-    const modalRef = this.modalCtrl.open(CreateUserComponent);
-    modalRef.componentInstance.user = user;
-    modalRef.result.then((result) => {
-      let i = this.countArr.find(it => {
-        return this.isSelectCount(it);
-      });
-      this.getUsers(i);
-      console.log(result);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+  // private editUserExec(user) {
+  //   const modalRef = this.modalCtrl.open(CreateEventComponent);
+  //   modalRef.componentInstance.user = user;
+  //   modalRef.result.then((result) => {
+  //     console.log(result);
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   });
+  // }
 
   public logout() {
     localStorage.clear();
@@ -130,5 +122,4 @@ export class UsersComponent implements OnInit {
     this.router.navigate(["login"]);
     return false;
   }
-
 }

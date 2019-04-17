@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Pickle Connect</title>
@@ -7,8 +8,18 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- para el que los sugerencias del mapa se vean encima de los modals -->
+  <style>
+    .pac-container.pac-logo {
+      z-index: 1000000 !important;
+    }
+  </style>
 </head>
+
 <body>
   <app-root></app-root>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6ecF25LKJaY3HpKH0iztKDDRgO60W10A&libraries=places"></script>
 </body>
+
 </html>

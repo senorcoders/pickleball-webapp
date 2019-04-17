@@ -10,9 +10,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(private auth: AuthService, private router: Router) {
-    if (this.auth.isLogged() === true) {
-      this.router.navigate(["users"]);
-    } else {
+    if (this.auth.isLogged() !== true) {
       this.router.navigate(["login"]);
     }
   }
